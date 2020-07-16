@@ -28,7 +28,7 @@ For more information scooch over to the `GitHub repository`_.
 
 .. toctree::
    :maxdepth: 1
-   :caption: Introduction
+   :caption: Kafka Demo
 
    docs/001-Getting-Started.md
    docs/002-Writing-a-Producer.md
