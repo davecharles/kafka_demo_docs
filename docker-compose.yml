@@ -1,0 +1,19 @@
+version: '3'
+
+services:
+
+  doc-sphinx:
+    build: .
+    volumes:
+      - .:/mnt/app
+      - build-dir:/mnt/app/build
+
+  doc-nginx:
+    image: nginx
+    volumes:
+      - build-dir:/usr/share/nginx
+    ports:
+      - 8000:80
+
+volumes:
+  build-dir:
