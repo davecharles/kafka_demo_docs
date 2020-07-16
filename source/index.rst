@@ -1,9 +1,9 @@
-Welcome to Kafka Demo Documentation
-===================================
+Welcome to the Kafka Demo Documentation
+=======================================
 
 This documentation accompanies the
 `Kafka Demo github project <https://github.com/davecharles/kafka_demo>`_.
-This provides a step-by-step guide to:
+It provides a step-by-step guide to:
 
 - Clone the Kafka demo repo
 - Using Docker Compose, spin up a local single node Kafka cluster
@@ -30,7 +30,7 @@ For more information scooch over to the `GitHub repository`_.
    :maxdepth: 1
    :caption: Introduction
 
-   docs/001-Introduction.md
-   docs/002-The-Meat-and-Two-Veg.md
-   docs/003-The-Juicy-Final-Act.md
-   docs/004-The-Finale.md
+   docs/001-Getting-Started.md
+   docs/002-Writing-a-Producer.md
+   docs/003-Writing-a-Consumer.md
+   docs/004-Next-Steps.md
