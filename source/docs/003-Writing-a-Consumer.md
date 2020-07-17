@@ -1,26 +1,165 @@
 # Writing a Kafka Consumer
+Now that we are populating Kafka with our weather data, we need a consumer to
+read it. In this exercise we will develop a simple service. In real life,
+such a service would process the data for a particular use case. For example
+we might want to transform and normalise the data, look for certain data
+and/or store in a database, maybe one backing a website showing a weather map.
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque facilisis vel velit nec pulvinar.
+## The Boilerplate
+In `src`, create a file called `consumer.py` and add the following
+ code:  
 
-``` sidebar:: You are free, and that is why you are lost.
+```python
+"""Simple Kafka Consumer"""
+import sys
+from termcolor import colored
 
-    Aenean sit amet tortor id nisl luctus feugiat. Proin vel libero orci. 
 
-    Mauris bibendum rutrum semper. Curabitur rhoncus finibus elit posuere
-    eleifend.
+def process(consumer):
+    while True:
+        try:
+            print('doing nothing')
+        except KeyboardInterrupt:
+            print(colored('Shutting Down', 'green'))
+            return
 
-    Aliquam sit amet sem ut quam elementum aliquet ac eget lectus. Integer nec
-    lacus non nulla auctor lobortis. Aliquam at dui at orci fringilla varius ac
-    ac mi. Duis pharetra malesuada suscipit. Proin dictum nunc ac nibh mollis
-    posuere. Morbi sed lectus est. Nunc dictum maximus molestie.
 
+def main():
+    kafka_consumer = 'foo'
+    process(kafka_consumer)
+    return 0
+
+
+if __name__ == '__main__':
+    sys.exit(main())
 ```
 
-Pellentesque sit amet bibendum nibh, in pretium mi. Nunc laoreet cursus ornare. Vivamus scelerisque tristique nibh ac scelerisque. Duis quis odio vel felis dictum aliquam. Curabitur vestibulum tortor vitae egestas faucibus. Curabitur sed ante id lectus posuere maximus nec et augue. Ut sit amet mauris justo. Praesent vel dui lorem.
+As with the producer module we've imported some packages for a basic app.
+We have a `process` function containing a loop that runs forever, until we
+issue a `KeyboardInterrupt` from the command line (or an operating system
+signal to the same effect).
 
-## Gobbledygook 
+## Make a Kafka consumer
+Add the following to the top of `producer.py`: 
 
-Mauris auctor porttitor vehicula. Nunc aliquam fermentum tellus, nec varius dolor imperdiet sed. Duis lacinia augue vitae elementum molestie. In eu neque vehicula, congue augue ut, efficitur ligula. Vivamus lectus orci, aliquam at nisi ac, imperdiet tristique ligula. Donec elit enim, gravida at ullamcorper quis, volutpat a quam. Duis dignissim cursus dolor, vitae convallis mi. Nam in dolor sem. Maecenas eget leo id ante luctus mattis quis sed erat. Etiam mauris nisl, dapibus quis hendrerit ac, vestibulum eu velit. Phasellus et est massa. Nunc efficitur neque nec ornare posuere. Nullam posuere enim id sagittis eleifend. Integer tellus erat, eleifend at ante id, pellentesque ultricies est. Sed pulvinar ante eu turpis tempor, in laoreet tortor volutpat. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.
+```python
+from kafka import KafkaConsumer
+```
 
-## Summary
-Aenean sit amet tortor id nisl luctus feugiat. Proin vel libero orci. Mauris bibendum rutrum semper. Curabitur rhoncus finibus elit posuere eleifend. Aliquam sit amet sem ut quam elementum aliquet ac eget lectus. Integer nec lacus non nulla auctor lobortis. Aliquam at dui at orci fringilla varius ac ac mi. Duis pharetra malesuada suscipit. Proin dictum nunc ac nibh mollis posuere. Morbi sed lectus est. Nunc dictum maximus molestie. Maecenas sit amet volutpat nisi, a maximus dolor. Nulla vulputate nulla lectus, at gravida justo mattis vitae. Phasellus suscipit euismod purus, eu pharetra turpis fringilla tempus. Cras ut metus cursus, pellentesque ligula quis, posuere nibh. Ut aliquet, ante sed porttitor semper, sem ligula imperdiet ipsum, quis lobortis justo urna at ante.
+The `process` function currently gets a consumer that is the string `foo`.
+Let's give it a proper consumer object as follows:
+
+```python
+kafka_consumer = KafkaConsumer('kubertron.weather.inbound',
+                               group_id='met-consumer-group',
+                               auto_offset_reset='earliest',
+                               bootstrap_servers=['localhost:29092'])
+```
+
+Here we have specified the following parameters:
+
+- The topic we want to consume from (_kubertron.weather.inbound_).
+- A consumer `group_id`. This tells the Kafka "coordinator" how to get data
+  for us from various topic partitions. 
+- The `auto_offset_reset` tells the client to initially consume from the
+  earliest topic partition offset. 
+- We are already familiar with the `bootstrap_servers` parameter that
+  specifies a Kafka broker to connect with. 
+
+## Consume messages 
+We are now ready to consume messages. We are passing `kafka_consumer` to the
+_process_ function. The consumer is an "iterable". Simply put, this means we
+can treat it as if it was a _list_ of messages that "never empties". This is
+because the default behaviour of the iterable is to "wait forever" for new
+messages. 
+
+To use the consumer in our process function, replace the line:
+
+```python
+print('doing nothing') 
+```
+
+with the following:
+
+```python
+for message in consumer:
+    print(f'--- {message.topic} - '
+          f'partition({message.partition})  '
+          f'offset({message.offset}) ---'
+          )
+    print(colored(f'{message.value}', 'green'))
+```
+
+Here we are simply getting a message and printing some of the attributes the
+message object provides. Importantly this includes the message `value` but
+also includes the topic, partition and offset we consumed from.
+
+## Running the code 
+We are ready to execute our consumer app! In a terminal window, make sure you
+are in the `kafka_demo` directory. Enter:
+
+```bash
+$ python -m src.consumer
+```
+
+You should see terminal output something like:
+
+```bash
+--- kubertron.weather.inbound - partition(5)  offset(0) ---
+b'sunny and warm'
+--- kubertron.weather.inbound - partition(6)  offset(0) ---
+b'sunny and warm'
+--- kubertron.weather.inbound - partition(4)  offset(0) ---
+b'sunny and warm'
+--- kubertron.weather.inbound - partition(1)  offset(0) ---
+b'sunny and warm'
+--- kubertron.weather.inbound - partition(1)  offset(1) ---
+b'sunny and warm'
+```
+
+Excellent work, you've successfully consumed from Kafka! Enter `ctrl+c` to
+terminate the app.
+
+## The story so far
+This is great progress! Hopefully you've got a `consumer.py` module that
+looks a bit like this: 
+
+```python
+"""Simple Kafka Consumer"""
+import sys
+from kafka import KafkaConsumer
+from termcolor import colored
+
+
+def process(consumer):
+    while True:
+        try:
+            for message in consumer:
+                print(f'--- {message.topic} - '
+                      f'partition({message.partition})  '
+                      f'offset({message.offset}) ---'
+                      )
+                print(colored(f'{message.value}', 'green'))
+        except KeyboardInterrupt:
+            print(colored('Shutting Down', 'green'))
+            return
+
+
+def main():
+    kafka_consumer = KafkaConsumer('kubertron.weather.inbound',
+                                   group_id='met-consumer-group',
+                                   auto_offset_reset='earliest',
+                                   bootstrap_servers=['localhost:29092'])
+    process(kafka_consumer)
+    return 0
+
+
+if __name__ == '__main__':
+    sys.exit(main())
+```
+
+Here's a quick recap of what we have done so far:
+
+- We wrote a Kafka consumer from scratch.
+- We ran our consumer app.
+- We saw consumed messages appear in our terminal window.

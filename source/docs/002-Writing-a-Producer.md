@@ -33,7 +33,8 @@ if __name__ == '__main__':
 
 Here we've imported some packages for a basic app. For pretty output we can
 use `termcolor`. We've added a main loop that runs forever, sleeping every
-iteration, until we issue a `KeyboardInterrupt` from the command line.
+iteration, until we issue a `KeyboardInterrupt` from the command line (or an
+operating system signal to the same effect).
 
 ## Make a Kafka producer
 We are going to use the [kafka-python](https://pypi.org/project/kafka-python/)
@@ -133,9 +134,9 @@ if __name__ == '__main__':
 
 Here's a quick recap of what we have done so far:
 
-- Wrote a Kafka Producer from scratch.
+- We wrote a Kafka producer from scratch.
 - We ran our producer app.
 - We took a look at the Kafka UI and saw our messages.
  
 Next we are going to write a simple Kafka Consumer, so we can consume our
-Producer's messages.
+producer's messages.

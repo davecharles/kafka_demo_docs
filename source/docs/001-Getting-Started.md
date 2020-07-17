@@ -39,7 +39,7 @@ editor to author our producer and consumer code.
 
 ### Git
 Git is a version control system (VCS). We need it to clone the
-[Kafka Demo](https://github.com/davecharles/kafka_demo) repository. If you
+[Kafka 101](https://github.com/davecharles/kafka_demo) repository. If you
 don't have `git` installed then
 [this is a good place to start](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git). 
 
