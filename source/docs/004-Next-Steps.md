@@ -48,4 +48,3 @@ aggregation, joins, and the notion of tables.
 Thanks for playing with Kafka 101, please share with friends and colleagues.
 
 > A book must be the axe for the frozen sea within us - Franz Kafka
-
