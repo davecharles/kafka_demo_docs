@@ -5,10 +5,10 @@ This documentation accompanies the
 `Kafka 101 github project <https://github.com/davecharles/kafka_demo>`_.
 It provides a step-by-step guide to:
 
-- Clone the Kafka demo repo
-- Using Docker Compose, spin up a local single node Kafka cluster
-- Build a simple kafka publisher and consumer
-- Embark on an exciting journey toward commanding all things Kafka
+- Clone the Kafka 101 Github repository.
+- Using Docker Compose, spin up a local single node Kafka cluster.
+- Build a simple kafka producer and consumer for a simple "Weather Data" app.
+- Embark on an exciting journey toward commanding all things Kafka!
 
 Using this guide
 ----------------
