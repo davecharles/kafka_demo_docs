@@ -67,19 +67,82 @@ required to get going. Clone the repository as follows:
 $ git clone git@github.com:davecharles/kafka_demo.git
 $ cd kafka_demo
 ```
+## Take a look around
+For the purposes of this 101 exercise we are primarily interested in the
+following project files and folders:
 
-## Start up Kafka 
-HEREHEREHEREHEREHEREHEREHEREHEREHEREHEREHEREHEREHERE
- 
-Mauris auctor porttitor vehicula. Nunc aliquam fermentum tellus, nec varius dolor imperdiet sed.
+- `docker-compose.yaml`. Docker Compose is a tool for defining and running
+multi-container Docker applications. This file tells Docker Compose how to
+spin up the various components (Docker containers) required to get a basic
+Kafka instance up and running.
+
+- `Makefile`. The Makefile contains "build targets"; you use `make` commands
+to perform certain actions within the project.
+
+- `src` folder. This is where we'll put the Python code we write 
+
+Right now, you don't need a detailed understanding of their content, but it's
+useful to know what we are working with during this tutorial. 
+
+## Start up Kafka
+Before we can _start_ kafka, we need to perform the "build" step. All the
+container images are pre-built and already exist in an online container
+registry (called "Docker Hub"), so the build is really just a case of caching
+these locally. Invoke the build as follows: 
+
+```bash
+$ make compose-build
+```
+
+You will see something like:
+
+```bash
+docker-compose build
+zookeeper uses an image, skipping
+kafka uses an image, skipping
+kafka-rest uses an image, skipping
+kafka-topics-ui uses an image, skipping
+```
+
+OK, let's start Kafka:
+
+```bash
+$ make compose-up
+```
+
+As Docker Compose starts the various containers you will see something like:
+
+```bash
+docker-compose up -d
+Creating network "kafka_demo_default" with the default driver
+Creating kafka_demo_zookeeper_1 ... done
+Creating kafka_demo_kafka_1     ... done
+Creating kafka_demo_kafka-rest_1 ... done
+Creating kafka_demo_kafka-topics-ui_1 ... done
+```
+
+You may have noticed a container started called `kafka_demo_kafka-topics-ui_1`.
+This is the Kafka Topics UI and enables you to look at what's going on in
+Kafka. Let's check Kafka is "up and running". 
+
+Navigate a browser to `http://localhost:8000`. Initially it will look
+pretty bare:
+
+![alt text](../_static/kui-1.png "Screen shot of empty Kafka UI")
+
+The UI shows two topics. There is one "system" topic and we've configured
+kafka (through the `docker-compose.yaml` file) to automatically create a
+topic called `kubertron.weather.inbound` that we will use later, but it is
+currently empty. As expected, there is a single Kafka broker.
 
 ## The story so far
-This went well - what we did
+This went well, well done! He's a quick recap of what we have done so far:
 
-- reviewed the prereqs
-- Cloned the repo 
-- Started kafka
-- Checked it was running
-- Reviewed the Kafka UI
+- Discovered a bit of background on Kafka.
+- Reviewed the prerequisites for this tutorial.
+- We cloned the Kafka Demo github repository and reviewed some of the files
+  and folders.
+- We built, and started Kafka.
+- We took a look at the Kafka UI.
  
 Next we are going to write a simple Kafka Producer using Python.  
