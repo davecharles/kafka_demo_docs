@@ -20,12 +20,14 @@ Using docker-compose is recommended to get started quickly.
 ```bash
 $ make compose-build
 $ make compose-up    # run detached
-$ make compose-down  # for when you're done
 ```
 
-Once up, navigate a browser to `http://localhost:8000`. Edit markdown
-documents as required. Refresh browser to view an automatically regenerated
-build.
+Once up, navigate a browser to `http://localhost:8000` to view the
+documentation. When you're done:
+
+```bash
+$ make compose-down
+```
 
 ### Building locally
 You can just build locally, you'll need a suitable Python environment with the

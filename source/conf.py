@@ -97,7 +97,8 @@ html_context = {
     'github_version': 'master/source/'
 }
 
-html_logo = "_static/kubertron-logo-mono-600x170.png"
+# html_logo = "_static/kubertron-logo-mono-600x170.png"
+html_logo = "_static/kafka.png"
 
 # -- Options for manual page output ------------------------------------------
 # One entry per manual page. List of tuples
