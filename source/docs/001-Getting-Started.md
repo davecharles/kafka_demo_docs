@@ -32,9 +32,10 @@ To complete our work we will need to:
 
 The following sections provide more details on these requirements.
 
-### Terminal
-For many of the commands described we will need to have a suitable terminal
-application.
+### Terminal and Code Editor 
+We will need to have a suitable terminal application where we can issue
+various commands (e.g. start Kafka or run the apps). We will also need a code
+editor to author our producer and consumer code.
 
 ### Git
 Git is a version control system (VCS). We need it to clone the
