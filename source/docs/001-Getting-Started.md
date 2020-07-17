@@ -17,20 +17,24 @@ formerly the lead architect for data infrastructure at LinkedIn) chose to
 name the software after the author Franz Kafka because it is "a system
 optimized for writing", and he liked Kafka's work.
 
-Due to its distributed design, Kafka allows large number of permanent or ad-hoc
-consumers and makes it highly available, resilient to node failures and able
-to support automatic recovery. These characteristics that make it ideal fit
-for communication and integration between components of large-scale data
-systems.
+Due to its distributed design, Kafka allows for a large number of permanent
+or ad-hoc consumers and makes it highly available, resilient to node failures
+and able to support automatic recovery. These characteristics make it an
+ideal fit for communication and integration between components of large-scale
+data systems.
 
 ## Prerequisites
 To complete our work we will need to:
 
-- Clone a git repository
-- Run docker containers
-- Run some python programs we will write
+- Clone a git repository.
+- Run docker containers.
+- Run some python programs that we will write.
 
 The following sections provide more details on these requirements.
+
+### Terminal
+For many of the commands described we will need to have a suitable terminal
+application.
 
 ### Git
 Git is a version control system (VCS). We need it to clone the
@@ -45,7 +49,7 @@ then [this is a good place to start](https://docs.docker.com/engine/install/).
 
 ### Python
 Python is a general purpose, intuitive, high level programming language.
-If you don't have `python ` installed then
+If you don't have `python` installed then
 [this is a good place to start](https://docs.docker.com/engine/install/). A
 suitable version is `Python 3.8`.
 
@@ -60,15 +64,16 @@ You should be able to install these using [pip](https://pip.pypa.io/en/stable/)
 which is usually packaged with Python.
 
 ## Clone the repository
-The [Kafka Demo](https://github.com/davecharles/kafka_demo) repository is
-required to get going. Clone the repository as follows:
+The [Kafka 101](https://github.com/davecharles/kafka_demo) repository is
+required to get going. Open a terminal window and clone the repository as
+follows:
 
 ```bash
 $ git clone git@github.com:davecharles/kafka_demo.git
 $ cd kafka_demo
 ```
 ## Take a look around
-For the purposes of this 101 exercise we are primarily interested in the
+For the purposes of this 101 tutorial we are primarily interested in the
 following project files and folders:
 
 - `docker-compose.yaml`. Docker Compose is a tool for defining and running
@@ -79,10 +84,11 @@ Kafka instance up and running.
 - `Makefile`. The Makefile contains "build targets"; you use `make` commands
 to perform certain actions within the project.
 
-- `src` folder. This is where we'll put the Python code we write 
+- `src` folder. This is where we'll put the Python code we write.
 
-Right now, you don't need a detailed understanding of their content, but it's
-useful to know what we are working with during this tutorial. 
+Right now, you don't need a detailed understanding of their content or how
+they work, but it's useful to know what we are working with during this
+tutorial. 
 
 ## Start up Kafka
 Before we can _start_ kafka, we need to perform the "build" step. All the
@@ -145,4 +151,5 @@ This went well, well done! He's a quick recap of what we have done so far:
 - We built, and started Kafka.
 - We took a look at the Kafka UI.
  
-Next we are going to write a simple Kafka Producer using Python.  
+Next we are going to write a simple Kafka Producer required by our "Weather
+Data" app using Python.  
