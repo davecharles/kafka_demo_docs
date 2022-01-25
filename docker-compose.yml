@@ -13,7 +13,7 @@ services:
     volumes:
       - build-dir:/usr/share/nginx
     ports:
-      - 8000:80
+      - 8080:80
 
 volumes:
   build-dir:
