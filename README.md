@@ -4,8 +4,6 @@ Welcome to the Kafka Demo documentation, mastered in
 [markdown](https://www.markdownguide.org/getting-started/), easily generated
 and viewed.
 
-test
-  
 ## Getting Started
 
 Clone the repo:
